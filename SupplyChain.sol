@@ -152,10 +152,15 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
        
     }
     
+    function signUp(string memory companyName) public{
+       
+        companies[msg.sender] = partners(companyName);
+    }
+    
     
   
   
-  	     function orderCompleted(uint _orderId) public payable // change according to manufacturer
+  	function orderCompleted(uint _orderId) public payable // change according to manufacturer
     {
         Order memory order1=partnerOrders[msg.sender][_orderId];
         order1.status="completed";
