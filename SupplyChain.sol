@@ -345,4 +345,40 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
     {
         transporteraddress.transfer(_transportationcost);
     }
+    
+    
+    // function for customer to buy products 
+    function sellProductToCustomer(address payable _retailer,string memory _productName) public payable
+   {
+       product[] memory productList= products[_retailer];
+       
+       
+          Order memory order1;
+        order1.status="completed";
+       // order1.quantity=quantity;
+       // order1.name=_productName;
+       
+       partnerOrders[_retailer].push(order1);
+       
+            //uint totalPricetoRetailer = 0;
+          for (uint i = 0; i < productList.length; i++) {
+            // `Proposal({...})` creates a temporary
+            // Proposal object and `proposals.push(...)`
+            // appends it to the end of `proposals`.
+            product memory product1=products[_retailer][i];
+            string memory productOrderedName = product1.name;
+            
+            if( (keccak256(abi.encodePacked((productOrderedName))) == keccak256(abi.encodePacked((_productName))) ))
+            {
+                //totalPricetoRetailer=products[_retailer][i].price*quantity;
+                
+                _retailer.transfer(msg.value);
+                product1.owner=msg.sender;
+            }
+   
+        }
+        
+        
+       
+   }
 }
