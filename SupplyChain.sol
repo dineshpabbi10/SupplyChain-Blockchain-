@@ -22,12 +22,8 @@ contract SupplyChain
         struct component{
         address owner;
         uint price;
-        //bool isSold;
-        //uint componentId;
         string componentName;
         string manufacturer;
-   
-
     }
     
        
@@ -38,16 +34,11 @@ contract SupplyChain
         string name;
         uint productId;
         bool isCompleted; // TO BE MADE INTO ENUM
-    // component[] components;
     }
     
       struct partners
     {
-        string Partnername;
-        //address payable partner;
-       
-       
-       
+        string Partnername;     
     }
     
     
@@ -88,7 +79,7 @@ contract SupplyChain
    mapping( string => component[]) components;
    
    mapping(string=>string[]) productToComponentMapping;
-    
+   uint retailer_profit2=1 ether;
    
       event orderCreated
       (
@@ -100,36 +91,39 @@ contract SupplyChain
          );
          
          
-            event orderStatus
+        event orderStatus
         (
-             string name,
+          string name,
           uint quantity,
           string status,
           uint orderId
-            );
+         );
             
             
       event orderCreatedforCompany(
-       
-            string name,
+        string name,
         uint quantity,
         string status,
         uint orderId,
         uint orderPayment
         );
    
-   
+       event orderCreatedfordistributor(
+        string name,
+        uint quantity,
+        string status,
+        uint orderId,
+        uint orderPayment   
+        );
+        
 function giveOrder(string memory _Componentname, uint number, address _partnerCompany)public payable
     {
-       
-//Order memory order1= partnerOrders[_partnerCompany][_orderId]; // we assume har ek product ki id oth company n manufacturer know
-       
         Order memory order1;
         order1.status="pending";
         order1.quantity=number;
         order1.name=_Componentname;
         
-          component memory component1=fetchIndividualComponent[msg.sender][order1.name];
+        component memory component1=fetchIndividualComponent[msg.sender][order1.name];
         component1.price=1 ether;// change price and make contsnats on top
         component1.componentName = order1.name;
         component1.owner = _partnerCompany;
@@ -290,8 +284,60 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         transporteraddress.transfer(_transportationcost);
     }
    
-    
-    
+     function retailerRequirement(string memory _productName, uint quantity, address _distributor) public payable
+    {
+       
+        product[] memory productList= products[_distributor];
+        Order memory order1;
+        order1.status="pending";
+        order1.quantity=quantity;
+        order1.name=_productName;
+       
+        uint totalPricetoRetailer = 0;
+       
+        for (uint i = 0; i < productList.length; i++) {
+            product memory product1=products[_distributor][i];
+            string memory productOrderedName = product1.name;
+            if( (keccak256(abi.encodePacked((productOrderedName))) == keccak256(abi.encodePacked((_productName))) ))
+            {
+                totalPricetoRetailer=products[_distributor][i].price*quantity;
+            }
+        }
+       
+        require(msg.value==totalPricetoRetailer);
+        order1.orderPayment=msg.value;
+        partnerOrders[_distributor].push(order1);
+     
+        emit orderCreatedfordistributor(order1.name, order1.quantity,order1.status,order1.orderId,order1.orderPayment);
+       
+    }
    
-    
+   
+    function checkdistributorStock(uint _orderId, address _retailer,address payable _transporter ) public payable // change according to new manufacturer 2 layer
+    {
+        Order memory order1=partnerOrders[msg.sender][_orderId];
+        order1.status="completed";
+        string memory _productOrderedName = order1.name; // to set the inventory of component we have fetched component name from
+        inventory memory inventory1= companyInventory[msg.sender][order1.name];
+        inventory1.productCount=inventory1.productCount- order1.quantity;
+        companyInventory[msg.sender][_productOrderedName] = inventory1;
+        partnerOrders[msg.sender][_orderId]=order1;
+        msg.sender.transfer(order1.orderPayment);
+       
+        inventory memory inventory2= companyInventory[_retailer][order1.name];
+        inventory2.productCount=inventory2.productCount+order1.quantity;
+       
+        companyInventory[_retailer][order1.name]=inventory2;
+        uint transportation_cost=order1.orderPayment/100; // he should know what transportation he has to pay
+        product memory product2= products[msg.sender][_orderId];
+        product2.owner=_retailer;
+        product2.price=product2.price+retailer_profit2;
+        products[_retailer].push(product2);
+        transportStocktoRetailer(transportation_cost,_transporter,_retailer, order1.name);
+    }
+   
+    function transportStocktoRetailer(uint _transportationcost, address payable transporteraddress, address _retailer, string memory _name) public payable
+    {
+        transporteraddress.transfer(_transportationcost);
+    }
 }
