@@ -72,7 +72,23 @@ contract SupplyChain
    
    mapping(address=>mapping(string=>inventory)) companyInventory;
    
+   uint public myEtherValue=1 ether; // to convert any given value to ether
+ 
+  event productCreated(
+        address owner,
+        uint price,
+        bool isSold,
+        string name,
+        uint productId,
+        bool isCompleted,
+        uint productCount
+      );
+     
+   mapping (address => product[]) products;
+   mapping( string => component[]) components;
    
+   mapping(string=>string[]) productToComponentMapping;
+    
    
       event orderCreated
       (
@@ -129,6 +145,61 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         Order memory order1= partnerOrders[msg.sender][_orderId];
         order1.status="inProgress";
         emit orderStatus(order1.name,order1.quantity,order1.status,order1.orderId);
+       
+    }
+    
+    
+  
+  
+  	     function orderCompleted(uint _orderId) public payable // change according to manufacturer
+    {
+        Order memory order1=partnerOrders[msg.sender][_orderId];
+        order1.status="completed";
+        string memory _Componentname = order1.name; // to set the inventory of component we have fetched component name from
+        inventory memory inventory1= companyInventory[companyAddress][_Componentname];
+        inventory1.productCount=inventory1.productCount+ order1.quantity;
+        companyInventory[companyAddress][_Componentname] = inventory1;
+        component memory component1=fetchIndividualComponent[msg.sender][order1.name];
+        component1.owner = companyAddress;
+        fetchIndividualComponent[companyAddress][component1.componentName]=component1;
+        msg.sender.transfer(order1.orderPayment);       // transfer payment to the manufacturer
+        component1.owner=companyAddress;
+    }
+   
+   
+    function createProduct(string memory _productName, uint _makingPrice) public // product created by the company
+    {
+           inventory memory inventory1= companyInventory[msg.sender][_productName]; // fetching initial inventory
+           require(msg.sender==companyAddress);
+           uint price=0;
+           string[] memory ingredients = productToComponentMapping[_productName];
+           
+           for (uint i = 0; i < ingredients.length; i++)
+           {
+           inventory memory ingredientInventory = companyInventory[msg.sender][ingredients[i]];
+           require(ingredientInventory.productCount>0);
+           ingredientInventory.productCount = ingredientInventory.productCount-1;
+           components[_productName].push(manuComponent[ingredients[i]]);
+           companyInventory[msg.sender][ingredients[i]]=ingredientInventory;
+           price = price+fetchIndividualComponent[msg.sender][ingredients[i]].price;
+           }
+   
+        product memory product1;
+       
+        product1.name=_productName;
+        product1.owner=msg.sender;
+        _makingPrice=_makingPrice*myEtherValue;
+        product1.price=price+_makingPrice;
+        product1.isSold=false;
+        product[] memory productsList = products[msg.sender]; // for adding product to the product list.
+        product1.productId=productsList.length+1;
+        product1.isCompleted=true;
+        inventory1.productCount=inventory1.productCount+1; // increasing inventory
+       
+        products[msg.sender].push(product1);
+        companyInventory[msg.sender][_productName]=inventory1;
+        emit productCreated(product1.owner,product1.price,product1.isSold,product1.name, product1.productId,product1.isCompleted,inventory1.productCount);
+       
        
     }
    
