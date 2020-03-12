@@ -381,4 +381,18 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         
        
    }
+   
+   function seeDetails(string memory _productName)public  
+   {   
+       component[] memory productComponentList= components[_productName];
+     
+       for (uint i = 0; i < productComponentList.length; i++) {
+                productToComponentMapping[_productName].push(string(abi.encodePacked((productComponentList[i].componentName),(" is manufactured by "),(productComponentList[i].manufacturer))));
+        
+       } 
+      }
+     
+      function see(string memory pn) view public returns ( string[] memory){
+          return productToComponentMapping[pn];
+      }
 }
