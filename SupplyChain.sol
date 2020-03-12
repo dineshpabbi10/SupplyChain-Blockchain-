@@ -1,5 +1,5 @@
 pragma solidity  >=0.5.0 ;
-
+pragma experimental ABIEncoderV2
 
 contract SupplyChain
 {
@@ -123,7 +123,7 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         order1.quantity=number;
         order1.name=_Componentname;
         
-        component memory component1=fetchIndividualComponent[msg.sender][order1.name];
+        component memory component1=fetchIndividualComponent[_partnerCompany][order1.name];
         component1.price=1 ether;// change price and make contsnats on top
         component1.componentName = order1.name;
         component1.owner = _partnerCompany;
@@ -381,18 +381,4 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         
        
    }
-   
-   function seeDetails(string memory _productName)public  
-   {   
-       component[] memory productComponentList= components[_productName];
-     
-       for (uint i = 0; i < productComponentList.length; i++) {
-                productToComponentMapping[_productName].push(string(abi.encodePacked((productComponentList[i].componentName),(" is manufactured by "),(productComponentList[i].manufacturer))));
-        
-       } 
-      }
-     
-      function see(string memory pn) view public returns ( string[] memory){
-          return productToComponentMapping[pn];
-      }
 }
