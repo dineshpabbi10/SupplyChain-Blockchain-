@@ -52,6 +52,14 @@ contract SupplyChain
    
        
     }
+    
+       constructor () public
+    {
+     company_name= "DELL";
+     companyAddress=msg.sender;
+     
+     
+    }
    
    mapping(address=>mapping(string =>component)) fetchIndividualComponent;
    
