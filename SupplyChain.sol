@@ -172,7 +172,7 @@ function giveOrder(string memory _Componentname, uint number, address _partnerCo
         component1.owner = companyAddress;
         fetchIndividualComponent[companyAddress][component1.componentName]=component1;
         msg.sender.transfer(order1.orderPayment);       // transfer payment to the manufacturer
-        component1.owner=companyAddress;
+        //component1.owner=companyAddress;
     }
    
    
