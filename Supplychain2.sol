@@ -4,8 +4,8 @@ pragma experimental ABIEncoderV2;
 contract Distributor
 {
     string public company_name; // Name of the Company
-   
-   
+    
+    
     address payable companyAddress;
      
     uint distributor_profit2=1 ether;
@@ -20,14 +20,14 @@ contract Distributor
         bool isSold;
         string name;
         uint productId;
-        bool isCompleted;
+        bool isCompleted; 
     }
-   
+    
 //1. Refers to the manufacturer struct which gets orders from admin Company
     struct manufacturer{
         string name;
     }
-   
+    
     struct component{
         address owner;
         uint price;
@@ -35,7 +35,7 @@ contract Distributor
         string manufacturer;
 
     }
-   
+    
      struct inventory
     {
         uint productCount;
@@ -45,8 +45,21 @@ contract Distributor
         string Partnername;
     }
    
+   modifier Owner{
+       
+       require(msg.sender==companyAddress, "Only Admin Company can call this function"
+       );
+       _;
+   }
    
- 
+   modifier onlyBy(address _account)
+    {
+        require(
+            msg.sender == _account,
+            "Sender not authorized."
+        );
+        _;
+    }
     mapping (address => product[]) products;// refers to the products the Admin Company has manufactured
     mapping(string => component) fetchComponent;// to fetch component from its name
     mapping(address=>Order[]) giveOrders;//1. general mapping to give orders up the hierarchy
@@ -65,9 +78,9 @@ contract Distributor
         uint distributor_profit;
     }
 
- 
-  //1. Defines the properties of the order.
-    struct Order{
+  
+  //1. Defines the properties of the order. 
+    struct Order{ 
         string name;
         uint quantity;
         string status;
@@ -91,13 +104,13 @@ contract Distributor
         uint orderId,
         uint orderPayment
     );
-   
+    
     event orderCompletedByDistributor(
-        string status,
+        string status, 
         uint productCount,
         address owner
         );
-       
+        
     event productCreated(
         address owner,
         uint price,
@@ -109,34 +122,34 @@ contract Distributor
       );
      
     event checkStockByCompany(
-     
+      
         string status,
         uint productCount,
         uint productCount2,
         address owner,
         uint price
-       
+        
         );
-       
+        
     event transportStockDistributor(
         uint cost
-       
-        );
-       
+        
+        ); 
+        
     event stockCheckedByDistributor(
-       
+        
         string status,
         uint productCount,
         uint productCount2,
         address owner,
         uint price
         );
-       
+        
     event transportationToRetailer
         (
         uint cost
         );
-       
+        
     event ordertoManufacturerCreated
         (
          string name,
@@ -170,41 +183,41 @@ contract Distributor
     }
    
   //1. this function is used to set product's components for each product that the AdminCompany manufacturers
-  //2. the company will add each product it manufactures here
-    function setComponentsOfProducts() public returns(string memory){
-        require(msg.sender==companyAddress);
-       
+  //2. the company will add each product it manufactures here 
+    function setComponentsOfProducts() public Owner returns(string memory) {
+        //require(msg.sender==companyAddress);
+        
         productToComponentMapping["FormalShirt"].push("thread");
         productToComponentMapping["FormalShirt"].push("cotton");
-       
+        
         productToComponentMapping["Jeans"].push("thread");
         productToComponentMapping["Jeans"].push("cotton");
         productToComponentMapping["Jeans"].push("zippers");
-       
+        
         productToComponentMapping["Shoes"].push("laces");
         productToComponentMapping["Shoes"].push("nylon");
         productToComponentMapping["Shoes"].push("rubber");
         productToComponentMapping["Shoes"].push("leather");
-       
+        
         productToComponentMapping["Jacket"].push("leather");
         productToComponentMapping["Jacket"].push("zippers");
         productToComponentMapping["Jacket"].push("fur");
-       
-       
+        
+        
         return "components have been set";
     }
-   
+    
     //1. Function used by manufacturer to sign-up
       function signUp(string memory companyName) public{
        
         companies[msg.sender] = partners(companyName);
     }
-   
-   //1. This function is executed by admin company to give order of the components to the manufacturer company
+    
+   //1. This function is executed by admin company to give order of the components to the manufacturer company 
    //2. Admin company passes the component name which it requires along with the quantity and address of the manufacturer company
-    function giveOrderToManufacturer(string memory _Componentname, uint number, address _manufacturerCompany)public payable
+    function giveOrderToManufacturer(string memory _Componentname, uint number, address _manufacturerCompany)public Owner payable
     {
-        require(msg.sender==companyAddress);
+       // require(msg.sender==companyAddress);
         Order memory order1;
         order1.status="pending";
         order1.quantity=number;
@@ -223,16 +236,16 @@ contract Distributor
        emit ordertoManufacturerCreated(order1.name, order1.quantity,order1.status,order1.orderId);
        
     }
-   
-    //1. This function is used by the manufacturer company for its internal progress as a step to complete order for Admin Company
+    
+    //1. This function is used by the manufacturer company for its internal progress as a step to complete order for Admin Company 
         function orderInProgress(uint _orderId) public{
         Order memory order1= giveOrders[msg.sender][_orderId];
         order1.status="inProgress";
         emit orderStatus(order1.name,order1.quantity,order1.status,order1.orderId);
        }
-   
+    
     //1. This function is also called by Manufacturer  to notify that order has been completed and components have been made
-    function orderCompleted(uint _orderId) public payable
+    function orderCompleted(uint _orderId) public payable 
     {
         Order memory order1=giveOrders[msg.sender][_orderId];
         order1.status="completed";
@@ -244,13 +257,13 @@ contract Distributor
         component1.owner = companyAddress;
         fetchIndividualComponent[companyAddress][component1.componentName]=component1;
         component1.price=1 ether;
-        msg.sender.transfer(order1.orderPayment);      
+        msg.sender.transfer(order1.orderPayment);       
         component1.owner=companyAddress;
        emit orderCompletedByDistributor(order1.status,inventory1.productCount,component1.owner);
     }
-   
+    
     //1. This function is run by Admin Company to create products after getting raw materials from manufacturers
-      function createProduct(string memory _productName, uint _makingPrice) public
+      function createProduct(string memory _productName, uint _makingPrice) public Owner
     {
         require(msg.sender==companyAddress);
         inventory memory inventory1= companyInventory[msg.sender][_productName];
@@ -282,7 +295,7 @@ contract Distributor
     }
    
    
-    // 1. The distributor orders for the product in this function
+    // 1. The distributor orders for the product in this function 
     function distributorRequirement(string memory _productName, uint quantity) public payable
     {
         product[] memory productList= products[companyAddress];
@@ -305,11 +318,11 @@ contract Distributor
         giveOrders[companyAddress].push(order1);
         emit orderCreatedforCompany(order1.name, order1.quantity,order1.status,order1.orderId,order1.orderPayment);
     }
-   
+    
     //1. This function is called by Admin Company to check if it has sufficient stock to give to distibutor and initiates product transport
-     function checkStock(uint _orderId, address _distributor,address payable _transporter ) public payable
+     function checkStock(uint _orderId, address _distributor,address payable _transporter ) public Owner payable 
     {
-        require(msg.sender==companyAddress);
+        //require(msg.sender==companyAddress);
         Order memory order1=giveOrders[msg.sender][_orderId];
         inventory memory inventory1= companyInventory[companyAddress][order1.name];
         require(inventory1.productCount>=order1.quantity); // added newwwwwww
@@ -328,13 +341,13 @@ contract Distributor
         product2.price=product2.price+distributor_profit2;
         products[_distributor].push(product2);
 
-        transportStocktoDistributor(transportation_cost,_transporter,_distributor, order1.name );
+        transportStocktoDistributor(transportation_cost,_transporter);
    
        emit checkStockByCompany(order1.status, inventory1.productCount,inventory2.productCount,product2.owner,product2.price);
     }
-   
+    
    // 1. The Admin Company transfers one hundredth amount of the order received to transporter as part of transporter fees
-    function transportStocktoDistributor(uint _transportationcost, address payable transporteraddress, address _distributor, string memory _name) public payable
+    function transportStocktoDistributor(uint _transportationcost, address payable transporteraddress) public payable
     {
        
         transporteraddress.transfer(_transportationcost);
@@ -342,7 +355,7 @@ contract Distributor
     }
    
    
-   //1 . The retailer orders for the required product in this function
+   //1 . The retailer orders for the required product in this function 
      function retailerRequirement(string memory _productName, uint quantity, address _distributor) public payable
     {
        
@@ -374,11 +387,11 @@ contract Distributor
        //1. This function is called by Distributor to check if it has sufficient stock to give to retailer and initiates product transport
       function checkdistributorStock(uint _orderId, address _retailer,address payable _transporter ) public payable // change according to new manufacturer 2 layer
     {
-       
-       
+        
+        
         Order memory order1=giveOrders[msg.sender][_orderId];
         inventory memory inventory1= companyInventory[msg.sender][order1.name];
-        require(inventory1.productCount>=order1.quantity);
+        require(inventory1.productCount>=order1.quantity); 
         order1.status="completed";
         string memory _productOrderedName = order1.name; // to set the inventory of component we have fetched component name from
         inventory1.productCount=inventory1.productCount- order1.quantity;
@@ -389,19 +402,19 @@ contract Distributor
         inventory2.productCount=inventory2.productCount+order1.quantity;
         companyInventory[_retailer][order1.name]=inventory2;
         uint transportation_cost=order1.orderPayment/100;
-       
+        
         product memory product2= products[msg.sender][_orderId];
         product2.owner=_retailer;
         product2.price=product2.price+retailer_profit2;
         products[_retailer].push(product2);
-        transportStocktoRetailer(transportation_cost,_transporter,_retailer, order1.name);
-       
+        transportStocktoRetailer(transportation_cost,_transporter);
+        
         emit stockCheckedByDistributor(order1.status, inventory1.productCount, inventory2.productCount,product2.owner, product2.price );
    
        
     }
        // 1. The Distributor transfers one hundredth amount of the order received to transporter as part of transporter fees
-     function transportStocktoRetailer(uint _transportationcost, address payable transporteraddress, address _retailer, string memory _name) public payable
+     function transportStocktoRetailer(uint _transportationcost, address payable transporteraddress) public payable
     {
        
         transporteraddress.transfer(_transportationcost);
@@ -409,7 +422,7 @@ contract Distributor
     }
 
 
-   // function for customer to buy products
+   // function for customer to buy products 
    //1. This function is used by customers to buy products from retailer
    //2. The customer can only buy one product at a time
    function sellProductToCustomer(address payable _retailer,string memory _productName) public payable
@@ -424,7 +437,7 @@ contract Distributor
             string memory productOrderedName = product1.name;
             if( (keccak256(abi.encodePacked((productOrderedName))) == keccak256(abi.encodePacked((_productName))) ))
             {
-             
+              
                 _retailer.transfer(msg.value);
                 product1.owner=msg.sender;
             }
@@ -440,12 +453,12 @@ contract Distributor
         productToComponentMapping[_productName].push(string(abi.encodePacked((productComponentList[i].componentName),(" is manufactured by "),(productComponentList[i].manufacturer))));
        }
     }
-     
+      
     function see(string memory pn) view public returns ( string[] memory){
           return productToComponentMapping[pn];
     }
-     
-   
+      
+    
    
    
 
