@@ -32,7 +32,7 @@ contract Distributor
         address owner;
         uint price;
         string componentName;
-        string manufacturer;
+        string manufacturer;  // to display customer the name of the manufacturer.
 
     }
     
@@ -184,6 +184,7 @@ contract Distributor
    
   //1. this function is used to set product's components for each product that the AdminCompany manufacturers
   //2. the company will add each product it manufactures here 
+  // to be called in constructor.
     function setComponentsOfProducts() public Owner returns(string memory) {
         //require(msg.sender==companyAddress);
         
@@ -215,6 +216,7 @@ contract Distributor
     
    //1. This function is executed by admin company to give order of the components to the manufacturer company 
    //2. Admin company passes the component name which it requires along with the quantity and address of the manufacturer company
+   ////////// component price and initialisation to be separated.
     function giveOrderToManufacturer(string memory _Componentname, uint number, address _manufacturerCompany)public Owner payable
     {
        // require(msg.sender==companyAddress);
@@ -223,6 +225,7 @@ contract Distributor
         order1.quantity=number;
         order1.name=_Componentname;
         component memory component1 = fetchComponent[_Componentname];
+         component1.price=1 ether;
         component1.componentName = order1.name;
         component1.owner = _manufacturerCompany;
         component1.manufacturer = companies[_manufacturerCompany].Partnername;
@@ -239,27 +242,31 @@ contract Distributor
     
     //1. This function is used by the manufacturer company for its internal progress as a step to complete order for Admin Company 
         function orderInProgress(uint _orderId) public{
-        Order memory order1= giveOrders[msg.sender][_orderId];
+        require(msg.sender != companyAddress, "Company can not set the order to be in progress, only manufacturer can do that");
+        Order memory order1= giveOrders[msg.sender][_orderId]; // orders of the respective manufacturer will be shown
         order1.status="inProgress";
+        giveOrders[msg.sender][_orderId]= order1;
         emit orderStatus(order1.name,order1.quantity,order1.status,order1.orderId);
        }
     
     //1. This function is also called by Manufacturer  to notify that order has been completed and components have been made
+    // modifier to be added.
     function orderCompleted(uint _orderId) public payable 
     {
+        require(msg.sender != companyAddress, "Company can not set the order to be in progress, only manufacturer can do that");
+        
         Order memory order1=giveOrders[msg.sender][_orderId];
         order1.status="completed";
+        giveOrders[msg.sender][_orderId]= order1;
         string memory _Componentname = order1.name; // to set the inventory of component we have fetched component name from
         inventory memory inventory1= companyInventory[companyAddress][_Componentname];
         inventory1.productCount=inventory1.productCount+ order1.quantity;
         companyInventory[companyAddress][_Componentname] = inventory1;
-        component memory component1=fetchIndividualComponent[msg.sender][order1.name];
+        component memory component1=fetchComponent[order1.name];
         component1.owner = companyAddress;
-        fetchIndividualComponent[companyAddress][component1.componentName]=component1;
-        component1.price=1 ether;
+        fetchComponent[component1.componentName]=component1;
         msg.sender.transfer(order1.orderPayment);       
-        component1.owner=companyAddress;
-       emit orderCompletedByDistributor(order1.status,inventory1.productCount,component1.owner);
+        emit orderCompletedByDistributor(order1.status,inventory1.productCount,component1.owner);
     }
     
     //1. This function is run by Admin Company to create products after getting raw materials from manufacturers
@@ -295,7 +302,7 @@ contract Distributor
     }
    
    
-    // 1. The distributor orders for the product in this function 
+    // 1.The distributor sends his requirement to the company, mentioning the productname and quantity required
     function distributorRequirement(string memory _productName, uint quantity) public payable
     {
         product[] memory productList= products[companyAddress];
@@ -304,10 +311,10 @@ contract Distributor
         order1.quantity=quantity;
         order1.name=_productName;
         uint totalPrice = 0;
-        for (uint i = 0; i < productList.length; i++) {
+        for (uint i = 0; i < productList.length; i++) {  // fetch the product which the company has
             product memory product1=products[companyAddress][i];
             string memory productOrderedName = product1.name;
-            if( (keccak256(abi.encodePacked((productOrderedName))) == keccak256(abi.encodePacked((_productName))) ))
+            if( (keccak256(abi.encodePacked((productOrderedName))) == keccak256(abi.encodePacked((_productName))) )) // match which product the distributor has required.qquantity
             {
                 totalPrice=products[companyAddress][i].price*quantity;
             }
