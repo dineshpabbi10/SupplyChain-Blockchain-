@@ -143,7 +143,7 @@ contract supplyChain {
     event sellProductToCustomerEvent(address owner);
 
     constructor() public {
-        company_name = "DELL";
+        company_name = "BLOCKCHAIN MANUFACTURERS";
         companyAddress = msg.sender;
         setComponentsOfProducts();
     }
