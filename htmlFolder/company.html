@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Buyer Page</title>    
+        <link rel="stylesheet" type="text/css" href="test.css">    
+        <script src="../node_modules/web3/dist/web3.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+    </head>
+    <body onload="getMyAddress(); reloadTable()">
+        <div><label id="myaddr"></label></div>
+        <div>
+            <table id="itemtable">
+                <thead>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Product Name</th>
+                        <th>Inventory</th>
+                        <th>Product Components</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="container">        
+            <h1>Buy Item</h1>          
+            <label class="col-lg-2 control-label">Name</label>
+                <!-- Comment: `id="itemid"` is used to access user's input for itemId -->
+                <input id="ItemName" type="text">   
+
+                <label class="col-lg-2 control-label">Manufacturer Address</label>
+                <!-- Comment: `id="itemid"` is used to access user's input for itemId -->
+                <input id="manufacturerAddress" type="text">  
+
+                <label class="col-lg-2 control-label">Quantity</label>
+                <!-- Comment: `id="itemid"` is used to access user's input for itemId -->
+                <input id="number" type="text">  
+
+            <label class="col-lg-2 control-label">Confirm Price (in Ether)</label>
+                <!-- Comment: `id="confirmedPrice"` is used to access user's input for confirmedPriceEther -->
+                <input id="confirmedPrice" type="text">            
+            <button id="button1">Give Order to Manufacturer </button>
+        </div>    
+        <div class="container">        
+            <h1>Follow Seller</h1>          
+            <label class="col-lg-2 control-label">Seller Account</label>
+                <!-- Comment: `id="selleraccount"` is used to access user's input -->
+                <input id="selleraccount" type="text">           
+            <button id="button2">Follow </button>
+        </div>    
+        <script>
+            var accounts;
+            const getMyAddress = async () => {
+                if (typeof web3 !== 'undefined') {
+                    web3 = new Web3(web3.currentProvider);
+                } else {
+                    // set the provider you want from Web3.providers
+                    web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+                }
+                 accounts = await web3.eth.getAccounts();
+                document.getElementById("myaddr").innerHTML="Company Account: " + accounts[1];
+            }
+            
+            const reloadTable = async () => {
+                if (typeof web3 !== 'undefined') {
+                    web3 = new Web3(web3.currentProvider);
+                } else {
+                    // set the provider you want from Web3.providers
+                    web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+                }
+
+                const networkId = await web3.eth.net.getId();
+                const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+                const deployedEthbay = new web3.eth.Contract(
+                    ethbayJson.abi,
+                    ethbayJson.networks[networkId].address
+                );
+               // const totalItemNumber = await deployedEthbay.methods.totalNumber().call();
+                let item ;
+              //  for (var i = 1;i<= totalItemNumber;i++) {
+                    let items = await deployedEthbay.methods.productToComponentMapping("FormalShirt",0).call();
+                    let items2 = await deployedEthbay.methods.productToComponentMapping("FormalShirt",1).call();
+
+                    let items3 = await deployedEthbay.methods.productToComponentMapping("Jeans",0).call();
+                    let items4 = await deployedEthbay.methods.productToComponentMapping("Jeans",1).call();
+
+                 //   let inventory1= await deployedEthbay.methods.productToComponentMapping(accounts[1],("FormalShirt",0)).call();
+
+                  ///  let items2 = await deployedEthbay.methods.prod2(0,"sd").call();
+                   // alert(items);
+                    //alert(items2);
+                  //  console.log(itsem);
+               //     items = [...items, item];
+               // }
+
+                var table = $('#itemtable');
+                table.find("tbody tr").remove();
+               // items.forEach(function (item) {
+                   let temp=-1;
+                   temp++;
+                    table.append("<tr><td>" + temp + "</td><td>" + "FormalShirt" + "</td><td>" + 0 + "</td><td>" + items + ","+items2+"</td></tr>");
+                    temp++;
+                    table.append("<tr><td>" + temp + "</td><td>" + "Jeans" + "</td><td>" + 0 + "</td><td>" + items3 + ","+items4+"</td></tr>");
+                    // });
+            };
+
+         $("#button1").click(async () => {
+                if (typeof web3 !== 'undefined') {
+                    web3 = new Web3(web3.currentProvider);
+                } else {
+                    // Note: please use WebsocketProvider if you want to subscribe events
+                    web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+                }
+                //See? I am using the `id="itemid"` you saw above to access the content of user's input
+               // const itemId = $("#itemid").val();
+                let name= $("#ItemName");
+                const address= $("#manufacturerAddress").val();
+                const numberOfComponents=$("#number").val();
+                const confirmedPriceEther = $("#confirmedPrice").val();
+                const confirmedPriceWei = web3.utils.toWei(confirmedPriceEther.toString(), 'Ether');
+                const accounts = await web3.eth.getAccounts();
+                const buyerAccount = accounts[0];
+
+                try {
+                    await web3.eth.personal.unlockAccount(buyerAccount, '', 1000);
+                } catch (error) {
+                    console.log(error);
+                }
+                const networkId = await web3.eth.net.getId();
+                const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+                const deployedEthbay = new web3.eth.Contract(
+                    ethbayJson.abi,
+                    ethbayJson.networks[networkId].address
+                );
+                console.log(deployedEthbay)
+               // alert("dsuh");
+                //Estimate the gas consumption
+               
+                const gasAmount = await deployedEthbay.methods.giveOrderToManufacturer(name.toString(),numberOfComponents,address).estimateGas({from: buyerAccount, value: confirmedPriceWei})
+               alert("hi");
+                try {
+                    const receipt = await deployedEthbay.methods.giveOrderToManufacturer(name.toString(),numberOfComponents,address).send({from: buyerAccount, value: confirmedPriceWei, gas: gasAmount})
+                    console.log("Receipt");
+                    console.log(receipt);
+                    const myItemId = receipt.events.ordertoManufacturerCreated.returnValues.name.toString();
+                    const myItemName = receipt.events.ordertoManufacturerCreated.returnValues.quantity.toString();
+                    const myItemId2 = receipt.events.ordertoManufacturerCreated.returnValues.status.toString();
+                    const myItemName2 = receipt.events.ordertoManufacturerCreated.returnValues.orderId.toString();
+
+                    const message = "Item "  + " (ID: " + myItemId + ") is purchased successfully.";
+                    console.log(message);
+                    alert(message);
+                } catch (error) {
+                    console.log('Transaction Error: ');
+                    console.log(error);
+                }
+            });
+
+          $("#button2").click(async () => {
+                if (typeof web3 !== 'undefined') {
+                    web3 = new Web3(web3.currentProvider);
+                } else {
+                    // set the provider you want from Web3.providers
+                    web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:8545"));
+                }
+
+                const sellerAccount = $("#selleraccount").val();
+                const networkId = await web3.eth.net.getId();
+                const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+                const deployedEthbay = new web3.eth.Contract(
+                    ethbayJson.abi,
+                    ethbayJson.networks[networkId].address
+                );
+                /*
+                 * This is the syntax how do you want to subscribte the event ItemSold.
+                 * The `filter` is optional. You can use filter to select only the events with specific indexed values.
+                 * The `fromBlock` is also optional. It could be used to get some historical events. 
+                 *  If `fromBlock` is omitted, it has default value 'lastest', meaning ignore all historical events (before latest block) 
+                 *  If `fromBlock` is given, all historical events from the given block number to the latest block will be return when called first time.
+                 * In either case, a new event will always be caught during the current session.
+                 */ 
+                await deployedEthbay.events.ordertoManufacturerCreated(
+                    { filter: { itemOwner: [ sellerAccount ] },
+                      //fromBlock: 0
+                      fromBlock: 'latest' 
+                    },
+                    (error, result) => {
+                        if (!error) {
+                            console.log("Event Result");
+                            console.log(result);
+                            const eventItemId = result.returnValues.itemId;
+                            const eventItemOwner = result.returnValues.manufacturerAddress;
+                            const eventItemName = result.returnValues.name;
+                            const eventItemPrice = result.returnValues.itemPrice.toString();
+                            const eventMessage = "New item " + eventItemName + " (ID: " + eventItemId + ") is available at price " + web3.utils.fromWei(eventItemPrice) + " Ether";
+                            console.log(eventMessage);
+                            alert(eventMessage);
+                        }
+                    }
+                );
+                const message = "You have followed user " + sellerAccount + ". \nMessage will be sent when the user adds new items."
+                console.log(message);
+                alert(message);
+            });
+        </script>
+    </body>
+</html>
