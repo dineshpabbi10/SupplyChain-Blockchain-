@@ -222,7 +222,7 @@ contract supplyChain {
     }
 
     //1. This function is run by Admin Company to create products after getting raw materials from manufacturers
-    function createProduct(string memory _productName, uint256 _makingPrice) public Owner
+    function createProduct(string memory _productName, uint256 _makingPrice, uint256 _count) public Owner
     {
         inventory memory inventory1 = companyInventory[msg.sender][_productName];
         uint256 price = 0;
@@ -230,8 +230,8 @@ contract supplyChain {
         string[] memory ingredients = productToComponentMapping[_productName];
         for (uint256 i = 0; i < ingredients.length; i++) {
             inventory memory ingredientInventory = companyInventory[msg.sender][ingredients[i]];
-            require(ingredientInventory.productCount > 0);
-            ingredientInventory.productCount = ingredientInventory.productCount - 1;
+            require(ingredientInventory.productCount >= _count);
+            ingredientInventory.productCount = ingredientInventory.productCount - _count;
             components[_productName].push(fetchComponent[ingredients[i]]);
             companyInventory[msg.sender][ingredients[i]] = ingredientInventory;
             price = price + fetchComponent[ingredients[i]].price;
@@ -246,7 +246,7 @@ contract supplyChain {
         product[] memory productsList = products[msg.sender];
         product1.productId = productsList.length + 1;
         product1.isCompleted = true;
-        inventory1.productCount = inventory1.productCount + 1;
+        inventory1.productCount = inventory1.productCount + _count;
         products[msg.sender].push(product1);
         companyInventory[msg.sender][_productName] = inventory1;
         seeDetails(_productName);
@@ -290,7 +290,7 @@ contract supplyChain {
         giveOrders[msg.sender][_orderId] = order1;
         msg.sender.transfer(order1.orderPayment);
         inventory memory inventory2 = companyInventory[_distributor][order1.name];
-        inventory2.productCount = inventory2.productCount + 1;
+        inventory2.productCount = inventory2.productCount + order1.quantity;
         companyInventory[_distributor][order1.name] = inventory2;
         uint256 transportation_cost = order1.orderPayment / 100;
         product memory product2 = products[companyAddress][_orderId];
@@ -334,7 +334,7 @@ contract supplyChain {
     }
 
     //1. This function is called by Distributor to check if it has sufficient stock to give to retailer and initiates product transport
-    function checkdistributorStock( uint256 _orderId, address _retailer, address payable _transporter // change according to new manufacturer 2 layer ) public payable {
+    function checkdistributorStock( uint256 _orderId, address _retailer, address payable _transporter ) public payable {
         require(msg.sender != companyAddress);
         Order memory order1 = giveOrders[msg.sender][_orderId];
         inventory memory inventory1 = companyInventory[msg.sender][order1.name];
