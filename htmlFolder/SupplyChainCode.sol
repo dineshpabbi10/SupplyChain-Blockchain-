@@ -465,7 +465,7 @@ contract SupplyChainCode {
         order1.status = "completed";
         giveOrders[_retailer].push(order1);
         inventory memory inventory2 = companyInventory[_retailer][_productName];
-        inventory2.productCount = inventory2.productCount - order1.quantity;
+        inventory2.productCount = inventory2.productCount - 1;
         companyInventory[_retailer][_productName] = inventory2;
         product memory product1;
         
