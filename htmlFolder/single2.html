@@ -519,7 +519,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 								<td><label  style="width: 100%;"class="btn btn-default control-label"> <b>orderId</b></label></td>
 						
-							<td> <input style="width: 100%;" id="orderid" type="text" > </td>  
+							<td> <input style="width: 100%;" id="orderId" type="text" > </td>  
 
 								
 							</tr>
@@ -783,7 +783,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	};
 
 
- $("#button1").click(async () => {
+$("#button1").click(async () => {
 		if (typeof web3 !== 'undefined') {
 			web3 = new Web3(web3.currentProvider);
 		} else {
@@ -792,10 +792,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		//See? I am using the `id="itemid"` you saw above to access the content of user's input
 	   // const itemId = $("#itemid").val();
-		let id= $("#orderId");
+		let id= $("#orderId").val();
 		const rAddress= $("#retailerAddress").val();
 		const tAddress=$("#transporterAddress").val();
-		const confirmedPriceEther = parseInt($("#confirmedPrice").val())/100;
+		const confirmedPriceEther = $("#confirmedPrice").val();
 		const confirmedPriceWei = web3.utils.toWei(confirmedPriceEther.toString(), 'Ether');
 		const accounts = await web3.eth.getAccounts();
 		const Account = accounts[2];
@@ -822,10 +822,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			const receipt = await deployedEthbay.methods.checkdistributorStock(id,rAddress,tAddress).send({from: Account, value: confirmedPriceWei, gas: gasAmount})
 			console.log("Receipt");
 			console.log(receipt);
-			const status = receipt.events.checkStockByCompany.returnValues.status.toString();
-			const inventory1 = receipt.events.checkStockByCompany.returnValues.productCount.toString();
-			const inventory2 = receipt.events.checkStockByCompany.returnValues.productCount2.toString();
-			const price = receipt.events.checkStockByCompany.returnValues.price.toString();
+			const status = receipt.events.stockCheckedByDistributor.returnValues.status.toString();
+			const inventory1 = receipt.events.stockCheckedByDistributor.returnValues.productCount.toString();
+			const inventory2 = receipt.events.stockCheckedByDistributor.returnValues.productCount2.toString();
+			const price = receipt.events.stockCheckedByDistributor.returnValues.price.toString();
 
 			const message = " Order " + status + " successfully.";
 			console.log(message);
@@ -835,6 +835,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			console.log(error);
 		}
 	});
+
 
 
 	$("#button3").click(async () => {
