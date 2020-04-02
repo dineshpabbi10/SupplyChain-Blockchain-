@@ -464,9 +464,9 @@ contract SupplyChainCode {
         Order memory order1;
         order1.status = "completed";
         giveOrders[_retailer].push(order1);
-        inventory memory inventory2 = companyInventory[_retailer][order1.name];
-        inventory2.productCount = inventory2.productCount + order1.quantity;
-        companyInventory[_retailer][order1.name] = inventory2;
+        inventory memory inventory2 = companyInventory[_retailer][_productName];
+        inventory2.productCount = inventory2.productCount - order1.quantity;
+        companyInventory[_retailer][_productName] = inventory2;
         product memory product1;
         
         for (uint256 i = 0; i < productList.length; i++) {
