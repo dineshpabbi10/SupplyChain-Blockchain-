@@ -5,8 +5,8 @@ contract SupplyChainCode {
     string public company_name; // Name of the Company
     address payable companyAddress;
 
-    uint256 distributor_profit2 = 1 ether;
-    uint256 retailer_profit2 = 1 ether;
+    uint256 profit = 1 ether;
+    //uint256 retailer_profit2 = 1 ether;
     uint256 public myEtherValue = 1 ether;
     uint256 public companyOrderNumber = 0;
     uint256 public retailerOrderNumber = 0;
@@ -51,21 +51,21 @@ contract SupplyChainCode {
     mapping(string => component) fetchComponent; // to fetch component from its name
     mapping(address => Order[]) public giveOrders; //1. general mapping to give orders up the hierarchy
     mapping(string => component[]) components; // to access product components through component name
-    mapping(string => product) fetchproducts; // to fetch products through product's name
+  //  mapping(string => product) fetchproducts; // to fetch products through product's name
     mapping(address => partners) companies; //mapping to fetch partner companies
     mapping(address => mapping(string => component)) fetchIndividualComponent; // to fetch individual components made by a company with company address and component name
-    mapping(address => mapping(string => inventory)) companyInventory;
+    mapping(address => mapping(string => inventory)) public companyInventory;
     mapping(string => string[]) public productToComponentMapping;
-   // mapping(uint => uint[]) public prod;
+   //mapping(uint => uint[]) public prod;
     //mapping(uint => string[]) public prod2;
     mapping(string => string[]) productDetailsMapping;
-    mapping(address => distributor) distributorInventory;
+   // mapping(address => distributor) distributorInventory;
 
-    struct distributor {
+ /*   struct distributor {
         string distributor_name;
         string location;
-        uint256 distributor_profit;
-    }
+       // uint256 distributor_profit;
+    }*/
 
     //1. Defines the properties of the order.
     struct Order {
@@ -155,7 +155,7 @@ contract SupplyChainCode {
     //2. the company will add each product it manufactures here
     // to be called in constructor.
     function setComponentsOfProducts() public Owner {
-        
+
         productToComponentMapping["FormalShirt"].push("cotton");
 
         productToComponentMapping["FormalShirt"].push("thread");
@@ -178,9 +178,9 @@ contract SupplyChainCode {
         uint256 number,
         address _manufacturerCompany
     ) public payable Owner {
-        require(number > 0);
-        bytes memory _cName2 = bytes(_Componentname);
-        require(!(_cName2.length == 0));
+       // require(number > 0);
+        //bytes memory _cName2 = bytes(_Componentname);
+        //require(!(_cName2.length == 0));
         Order memory order1;
         order1.status = "pending";
         order1.quantity = number;
@@ -345,7 +345,7 @@ contract SupplyChainCode {
         uint256 transportation_cost = order1.orderPayment / 100;
         product memory product2 = products[companyAddress][_orderId];
         product2.owner = _distributor;
-        product2.price = product2.price + distributor_profit2;
+        product2.price = product2.price + profit;
         products[_distributor].push(product2);
 
         transportStocktoDistributor(transportation_cost, _transporter);
@@ -416,7 +416,7 @@ contract SupplyChainCode {
         address _retailer,
         address payable _transporter // change according to new manufacturer 2 layer
     ) public payable {
-        require(msg.sender != companyAddress);
+        //require(msg.sender != companyAddress);
         Order memory order1 = giveOrders[msg.sender][_orderId];
         inventory memory inventory1 = companyInventory[msg.sender][order1.name];
         require(inventory1.productCount >= order1.quantity);
@@ -432,7 +432,7 @@ contract SupplyChainCode {
         uint256 transportation_cost = order1.orderPayment / 100;
         product memory product2 = products[msg.sender][_orderId];
         product2.owner = _retailer;
-        product2.price = product2.price + retailer_profit2;
+        product2.price = product2.price + profit;
         products[_retailer].push(product2);
         transportStocktoRetailer(transportation_cost, _transporter);
 
@@ -464,7 +464,11 @@ contract SupplyChainCode {
         Order memory order1;
         order1.status = "completed";
         giveOrders[_retailer].push(order1);
+        inventory memory inventory2 = companyInventory[_retailer][order1.name];
+        inventory2.productCount = inventory2.productCount + order1.quantity;
+        companyInventory[_retailer][order1.name] = inventory2;
         product memory product1;
+        
         for (uint256 i = 0; i < productList.length; i++) {
             product1 = products[_retailer][i];
             string memory productOrderedName = product1.name;
@@ -482,7 +486,7 @@ contract SupplyChainCode {
 
     //1. This function is used by the cutomer to see product details, especially, the manufacturer of raw materials of the product
     function seeDetails(string memory _productName) public {
-        require(msg.sender == companyAddress);
+      //  require(msg.sender == companyAddress);
         component[] memory productComponentList = components[_productName];
         for (uint256 i = 0; i < productComponentList.length; i++) {
             productDetailsMapping[_productName].push(
