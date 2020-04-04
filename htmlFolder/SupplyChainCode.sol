@@ -47,7 +47,7 @@ contract SupplyChainCode {
         _;
     }
 
-    mapping(address => product[]) products; // refers to the products the Admin Company has manufactured
+    mapping(address => product[]) public products; // refers to the products the Admin Company has manufactured
     mapping(string => component) fetchComponent; // to fetch component from its name
     mapping(address => Order[]) public giveOrders; //1. general mapping to give orders up the hierarchy
     mapping(string => component[]) components; // to access product components through component name
@@ -58,7 +58,7 @@ contract SupplyChainCode {
     mapping(string => string[]) public productToComponentMapping;
    //mapping(uint => uint[]) public prod;
     //mapping(uint => string[]) public prod2;
-    mapping(string => string[]) productDetailsMapping;
+    mapping(string => string[]) public productDetailsMapping;
    // mapping(address => distributor) distributorInventory;
 
  /*   struct distributor {
@@ -154,7 +154,7 @@ contract SupplyChainCode {
     //1. this function is used to set product's components for each product that the AdminCompany manufacturers
     //2. the company will add each product it manufactures here
     // to be called in constructor.
-    function setComponentsOfProducts() public Owner {
+    function setComponentsOfProducts() public {
 
         productToComponentMapping["FormalShirt"].push("cotton");
 
@@ -177,7 +177,7 @@ contract SupplyChainCode {
         string memory _Componentname,
         uint256 number,
         address _manufacturerCompany
-    ) public payable Owner {
+    ) public payable{
        // require(number > 0);
         //bytes memory _cName2 = bytes(_Componentname);
         //require(!(_cName2.length == 0));
@@ -245,14 +245,14 @@ contract SupplyChainCode {
     }
 
     //1. This function is run by Admin Company to create products after getting raw materials from manufacturers
-   function createProduct(string memory _productName, uint256 _makingPrice)public Owner {
+   function createProduct(string memory _productName, uint256 _makingPrice)public {
         inventory memory inventory1 = companyInventory[msg.sender][_productName];
         uint256 price = 0;
         string[] memory ingredients = productToComponentMapping[_productName];
         for (uint256 i = 0; i < ingredients.length; i++) {
             inventory memory ingredientInventory = companyInventory[msg
                 .sender][ingredients[i]];
-            require(ingredientInventory.productCount > 0);
+           // require(ingredientInventory.productCount > 0);
             ingredientInventory.productCount =
                 ingredientInventory.productCount -
                 1;
@@ -290,7 +290,7 @@ contract SupplyChainCode {
         string memory _productName,
         uint256 quantity
     ) public payable {
-        require(msg.sender != companyAddress);
+      //  require(msg.sender != companyAddress);
         product[] memory productList = products[companyAddress];
         Order memory order1;
         order1.status = "pending";
@@ -373,7 +373,7 @@ contract SupplyChainCode {
         uint256 quantity,
         address _distributor
     ) public payable {
-        require(msg.sender != companyAddress);
+       // require(msg.sender != companyAddress);
 
         product[] memory productList = products[_distributor];
         Order memory order1;
@@ -419,7 +419,7 @@ contract SupplyChainCode {
         //require(msg.sender != companyAddress);
         Order memory order1 = giveOrders[msg.sender][_orderId];
         inventory memory inventory1 = companyInventory[msg.sender][order1.name];
-        require(inventory1.productCount >= order1.quantity);
+      //  require(inventory1.productCount >= order1.quantity);
         order1.status = "completed";
         string memory _productOrderedName = order1.name; // to set the inventory of component we have fetched component name from
         inventory1.productCount = inventory1.productCount - order1.quantity;
@@ -501,7 +501,7 @@ contract SupplyChainCode {
         }
     }
 
-    function see(string memory pn) public view returns (string[] memory) {
-        return productDetailsMapping[pn];
-    }
+   // function see(string memory pn) public view returns (string[] memory) {
+     //   return productDetailsMapping[pn];
+  //  }
 }
