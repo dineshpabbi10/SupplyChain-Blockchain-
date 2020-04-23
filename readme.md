@@ -59,39 +59,39 @@
    <li>We plan to integrate login mechanism in the project so that only the respective stakeholder can access their portals</li>
    <li> The browser settings need to be changed as follws in order to access the files, since we are using Web3</li>
    <ul>
-      <li> Firefox </li>
+      <h4><li> Firefox </li></h4>
       	For Firefox:
-   If you run in Firefox, it is easy for you to finish the configuration.
-   1.	Open you Firefox.
-   2.	In your address bar, go to about:config 
-   3.	Accept the Risk and Continue
-   4.	You will see a search bar, search the keyword Origin
-   5.	Look for security.fileuri.strict_origin_policy
-   6.	It default value is true, we need to change it to false. Double clicking that entry should work for our purpose.
-   7.	Close and relaunch your Firefox.
-   8.	Done.
-      <li> Chrome </li>
-      o	MacOS
-Run your Google Chrome with the following Command 
-[Refer mine for an example]:
+   If you run in Firefox, it is easy for you to finish the configuration.<br>
+   1.	Open you Firefox.<br>
+   2.	In your address bar, go to about:config <br>
+   3.	Accept the Risk and Continue<br>
+   4.	You will see a search bar, search the keyword Origin<br>
+   5.	Look for security.fileuri.strict_origin_policy<br>
+   6.	It default value is true, we need to change it to false. Double clicking that entry should work for our purpose.<br>
+   7.	Close and relaunch your Firefox.<br>
+   8.	Done.<br>
+      <h4><li> Chrome </li></h4> 
+      <h4>	MacOS</h4>
+Run your Google Chrome with the following Command <br>
+[Refer mine for an example]:<br>
 
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir="~/chrome" --disable-web-security
 
 Usually, Google Chrome is found in /Applications folder. Even though it is named as “Google Chrome.app”, but it is a directory (i.e., folder). The executable file is in 
-/Applications/Google\ Chrome.app/Contents/MacOS
+/Applications/Google\ Chrome.app/Contents/MacOS <br>
 
 The backslash is escaping that space. You need to keep the same options 
---user-data-dir="~/chrome" --disable-web-security
+--user-data-dir="~/chrome" --disable-web-security <br>
 
-o	Linux [With mine as an example]
-google-chrome --user-data-dir="~/chrome" --disable-web-security
+<hr>	Linux  </h4>
+google-chrome --user-data-dir="~/chrome" --disable-web-security <br>
 
-Usually, google-chrome is a resolvable command in your Ubuntu. 
+Usually, google-chrome is a resolvable command in your Ubuntu. <br>
 
 If not, you need to find where is your google-chrome runnable file. From command line, go to the folder where google-chrome locates and run this command instead:
 ./google-chrome --user-data-dir="~/chrome" --disable-web-security
-
-o	Windows
+ <br>
+<h4>Windows</h4>
 First, you need to know where is your Google Chrome executable file (i.e., chrome.exe). From your task bar, type Google Chrome and expand the preview options shown on the right-hand-side. 
 Then, select the Open File Location. It usually locates the shortcut of your Google Chrome runnable file. Right click the shortcut file and show its property will reveal where is your Google Chrome executable file (i.e., chrome.exe) location. From window DoS command line, go to the folder where Google Chrome executable file locates, then run
 Chrome.exe --user-data-dir="C:\chrome" --disable-web-security
