@@ -83,7 +83,7 @@ Usually, Google Chrome is found in /Applications folder. Even though it is named
 The backslash is escaping that space. You need to keep the same options 
 --user-data-dir="~/chrome" --disable-web-security <br>
 
-<hr>	Linux  </h4>
+<h4>	Linux  </h4>
 google-chrome --user-data-dir="~/chrome" --disable-web-security <br>
 
 Usually, google-chrome is a resolvable command in your Ubuntu. <br>
