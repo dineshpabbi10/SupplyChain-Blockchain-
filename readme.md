@@ -35,6 +35,7 @@ This is a course project made as a part of EECE 571G [ Software Engineering in B
 <hr>
 <h3>
 	Tools used: 
+	![Tools and Technologies used](link-to-image)
 	</h3>
 	<hr>
 	<h3>How to run</h3>
