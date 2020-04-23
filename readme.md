@@ -35,7 +35,7 @@ This is a course project made as a part of EECE 571G [ Software Engineering in B
 <hr>
 <h3>
 	Tools used: 
-	![Tools and Technologies used](https://github.com/dineshpabbi10/SupplyChain-Blockchain-/blob/master/Picture1.png)
+	![Tools and Technologies used](Picture1.png)
 	</h3>
 	<hr>
 	<h3>How to run</h3>
