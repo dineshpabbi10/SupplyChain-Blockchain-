@@ -1,0 +1,794 @@
+<!--A Design by W3layouts 
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<!--<title>Wedding Store A Ecommerce Category Flat Bootstrap Responsive Website Template | Single :: w3layouts</title>-->
+
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+<!-- Custom Theme files -->
+
+<link href="://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"></link>
+<!--theme-style-->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
+<script src="../node_modules/web3/dist/web3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Wedding Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- start menu -->
+<script src="js/simpleCart.min.js"> </script>
+<!-- start menu -->
+<link href="css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="js/memenu.js"></script>
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<!-- /start menu -->
+<link href="css/form.css" rel="stylesheet" type="text/css" media="all" />
+
+
+
+
+
+
+
+
+
+</head>
+<body onload="getMyAddress(); reloadTable()"> 
+<!--header-->	
+
+<div><label id="myaddr"></label></div>
+
+<br>
+<br>
+
+<div class="top_bg">
+
+    
+    <div class="container">
+        <div class="header_top-sec">
+            <div class="top_right">
+                <!--<ul>
+                    <li><a href="#">help</a></li>|
+                    <li><a href="contact.html">Contact</a></li>|
+                    
+                    <li><a href="login.html">Track Order</a></li>
+                </ul>-->
+                <div class="logo">
+                    <h1>Retailer Page</h1>
+                </div>
+            </div>
+            <div class="top_left">
+                <!--<ul>
+                    <li class="top_link">Email:<a href="mailto:info@example.com">mail@example.com</a></li>|
+                    <li class="top_link"><a href="login.html">My Account</a></li>               
+                </ul>-->
+            </div>
+                <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<div class="header-top">
+	 <div class="header-bottom">
+		 <div class="container">			
+				
+			 <!---->
+		 
+			 <div class="top-nav">
+				<!--<ul class="memenu skyblue"><li class="active"><a href="index.html">Home</a></li>
+					<li class="grid"><a href="#">Wedding</a>
+						<div class="mepanel">
+							<div class="row">
+							</div>
+						</div>
+					</li>
+					<li class="grid"><a href="#">Bride Style</a>
+						<div class="mepanel">
+							<div class="row">
+							
+							</div>
+						</div>
+					</li>
+					<li class="grid"><a href="typo.html">Typo</a></li>
+					<li class="grid"><a href="contact.html">Contact</a></li>
+				</ul>-->
+				<div class="clearfix"> </div>
+			 </div>
+		
+			<!---- <div class="cart box_1">
+				 <a href="checkout.html">
+					<h3> <div class="total">
+					<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span>)</div>
+					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></h3>
+				</a>
+				<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+			 	<div class="clearfix"> </div>
+			 </div>-->
+			 <div class="clearfix"> </div>
+						 
+			 </div>
+			<div class="clearfix"> </div>
+	  </div>
+</div>
+
+<div class="single-sec">
+	 <div class="container">   
+		 <div class="col-md-9 det">
+		
+				 <div class="item-sec" style="width: 135%;">
+					<h2 style="color:rgb(243, 239, 239);background: rgb(19, 33, 99);;padding: 8px 15px;
+					margin-top: 0.5em; text-align: center;
+					
+					font-family: 'JosefinSans-Bold'">
+					 Product Info</h2>
+			 <table class="table table-bordered">
+					 <tbody>
+
+						<tr style="background: #F1F1F1;">
+							<th><label class="btn btn-default control-label"> <b>Sr No</b></label></th>
+							<th><label class="btn btn-default control-label"> <b>Product</b></label></th>
+							<th><label class="btn btn-default control-label"> <b>Inventory</b></label></th>
+							<th><label class="btn btn-default control-label"> <b>Components</b></label></th>
+						</tr>
+
+						<tr style="background: rgb(255, 255, 255);">
+							<td class="col-lg-3 control-label"><label class="">0</label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayProduct">FormalShirt</label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayInventory"></label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayComponents1"></label></td>
+						</tr>
+
+
+						<tr style="background: rgb(255, 255, 255);">
+							<td class="col-lg-3 control-label"><label class="">1</label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayProduct">Jeans</label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayInventory2"></label></td>
+							<td class="col-lg-3 control-label"><label class="" id="displayComponents2"></label></td>
+						</tr>
+							<tr>
+
+							
+														
+						</tbody>
+						</table> 
+						<br>
+						
+				 </div>	
+				 
+			</div>
+	
+
+
+
+
+		 <div class="col-md-9 det">
+				
+				 <div class="item-sec" style="width: 135%;">
+					<h2 style="color:rgb(243, 239, 239);background: rgb(19, 33, 99);padding: 8px 15px;
+					margin-top: 0.5em; text-align: center;
+					
+					font-family: 'JosefinSans-Bold'">
+					 Give Order</h2>
+
+					 <table class="table table-bordered">
+					 <tbody>
+						<tr >
+
+								<td><label  style="width: 100%;"class="btn btn-default control-label"> <b>Name</b></label></td>
+						
+							<td> <input style="width: 100%;" id="ItemName" type="text" > </td>  
+
+								
+							</tr>
+							<tr >
+						
+								<td><label style="width: 100%;" class="btn btn-default  control-label" ><b>Distributor Address</b></label></td>
+						
+							<td><input style="width: 100%;" id="distributorAddress" type="text" > </td>  
+							</tr>
+							<tr >
+								
+								<td><label  style="width: 100%;" class="btn btn-default control-label"><b>Quantity</b></label></td>
+						
+							<td><input style="width: 100%;" id="number" type="text" > </td>  
+							</tr>
+							<tr >
+							
+								<td><label style="width: 100%;" class="btn btn-default control-label" ><b>Confirm Price</b></label></td>
+						
+							<td><input style="width: 100%;" id="confirmedPrice" type="text" > </td>  
+							</tr>
+							
+														
+						</tbody>
+						</table> 
+
+						<button id="button1" class="btn btn-success btn-lg" style="width:100%;display:block"> Give Order to Distributor</button>
+				 </div>	
+				 
+            </div>
+            
+            <div class="col-md-9 det">
+				<!-- 		<button class="btn btn-default control-label" id="Orders_Manu">Refresh</button> -->
+						 <div class="item-sec" style="width: 135%;">
+							<h2 style="color:rgb(243, 239, 239);background: rgb(19, 33, 99);padding: 8px 15px;
+							margin-top: 0.5em; text-align: center;
+							
+							font-family: 'JosefinSans-Bold'">
+							 Orders To Distributor</h2>
+		
+		
+		
+							
+		
+							 <table class="table table-bordered" id ="ordertable">
+							 <tbody>
+		
+								<tr style="background: #F1F1F1;">
+									<th><label class="btn btn-default control-label"> <b>Sr No</b></label></th>
+									<th><label class="btn btn-default control-label"> <b>Product</b></label></th>
+									<th><label class="btn btn-default control-label"> <b>Quantity</b></label></th>
+									<th><label class="btn btn-default control-label"> <b>Price</b></label></th>
+									<th><label class="btn btn-default control-label"> <b>Status</b></label></th>
+								</tr>
+		
+							
+						<tr style="background: rgb(255, 255, 255);">
+									<td class="col-lg-3 control-label"><label class="">0</label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayProduct">FormalShirt</label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayInventory"></label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayComponents1"></label></td>
+								<td></td>
+								</tr>
+		
+		
+								<tr style="background: rgb(255, 255, 255);">
+									<td class="col-lg-3 control-label"><label class="">1</label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayProduct">Jeans</label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayInventory"></label></td>
+									<td class="col-lg-3 control-label"><label class="" id="displayComponents2"></label></td>
+								<td></td>
+								</tr>
+							
+						<tr style="background: rgb(255, 255, 255);">
+		
+										<!--<td><label  style="width: 100%;"class="btn btn-default control-label"> <b>Name</b></label></td>
+								
+									<td> <input style="width: 100%;" id="ItemName" type="text" > </td>  
+		
+										
+									</tr>
+									<tr>
+								
+										<td><label style="width: 100%;" class="btn btn-default  control-label" ><b>Manufacturer Address</b></label></td>
+								
+									<td><input style="width: 100%;" id="manufacturerAddress" type="text" > </td>  
+									</tr>
+									<tr>
+										
+										<td><label  style="width: 100%;" class="btn btn-default control-label"><b>Quantity</b></label></td>
+								
+									<td><input style="width: 100%;" id="number" type="text" > </td>  
+									</tr>
+									<tr>
+									
+										<td><label style="width: 100%;" class="btn btn-default control-label" ><b>Confirm Price</b></label></td>
+								
+									<td><input style="width: 100%;" id="confirmedPrice" type="text" > </td>  
+									</tr>-->
+									
+																
+								</tbody>
+								</table> 
+							
+								
+						 </div>	
+						 
+                    </div>
+                    
+
+          <!-- <div class="col-md-9 det">
+            <div class="item-sec" style="width: 135%;">
+                <h2 style="color: #333;background: #eee;padding: 8px 15px;
+                margin-top: 0.5em; text-align: center;
+                
+                font-family: 'JosefinSans-Bold'">
+                 Orders From customer</h2>
+         <table class="table table-bordered">
+                 <tbody>
+                    <tr>
+                        <th><label class="btn btn-default control-label"> <b>Sr No</b></label></th>
+                        <th><label class="btn btn-default control-label"> <b>Product</b></label></th>
+                        <th><label class="btn btn-default control-label"> <b>Customer Address</b></label></th>
+                        <th><label class="btn btn-default control-label"> <b>Status</b></label></th>
+                        <th><label class="btn btn-default control-label"> <b>Sell Product</b></label></th>
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 control-label"><label class="">0</label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayProduct"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayInventory"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayComponents1"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayComponents2"></label></td>
+                  
+                    </tr>
+                    <tr>
+                        <td class="col-lg-3 control-label"><label class="">1</label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayProduct"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayInventory"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayComponents2"></label></td>
+                        <td class="col-lg-3 control-label"><label class="" id="displayComponents2"></label></td>
+                  
+                    </tr>
+                        <tr>
+                        
+                                                    
+                    </tbody>
+                    </table> 
+                    <br>
+                    
+             </div>	
+</div>-->
+
+		<!--	<div class="col-md-9 det">
+						
+				 <div class="item-sec" style="width: 135%;">
+					<h2 style="color: #333;background: #eee;padding: 8px 15px;
+					margin-top: 0.5em; text-align: center;
+					
+					font-family: 'JosefinSans-Bold'">
+					 Create Product</h2>
+					
+					 <table class="table table-bordered">
+					 <tbody>
+							<tr>
+								<td><label  style="width: 100%;"class="btn btn-default control-label"> <b>ProductName</b></label></td>
+						
+							<td> <input style="width: 100%;" id="productName" type="text" > </td>  
+								
+							</tr>
+							<tr>
+						
+								<td><label style="width: 100%;" class="btn btn-default  control-label" ><b>Making Price</b></label></td>
+						
+							<td><input style="width: 100%;" id="makingPrice" type="text" > </td>  
+							</tr>
+							
+							
+														
+						</tbody>
+						</table> 
+						<br>
+						<button class="btn btn-success btn-lg" style="width:100%;display:block"> Create Product</button>
+				 </div>	
+				 
+			</div> -->
+
+
+
+
+
+
+
+
+		<!--	<div class="col-md-9 det">
+						
+				<div class="item-sec" style="width: 135%;">
+				   <h2 style="color: #333;background: #eee;padding: 8px 15px;
+				   margin-top: 0.5em; text-align: center;
+				   
+				   font-family: 'JosefinSans-Bold'">
+					Check Stock</h2>
+				
+					<table class="table table-bordered">
+					<tbody>
+						   <tr>
+							   <td><label  style="width: 100%;"class="btn btn-default control-label"> <b>OrderId</b></label></td>
+					   
+						   <td> <input style="width: 100%;" id="productName" type="text" > </td>  
+							   
+						   </tr>
+						   <tr>
+					   
+							   <td><label style="width: 100%;" class="btn btn-default  control-label" ><b>Making Price</b></label></td>
+					   
+						   <td><input style="width: 100%;" id="makingPrice" type="text" > </td>  
+						   </tr>
+						   
+						   
+													   
+					   </tbody>
+					   </table> 
+					   <br>
+					   <button class="btn btn-success btn-lg" style="width:100%;display:block"> Create Product</button>
+				</div>	
+				
+		   </div>
+			
+		 <div class="arrivals">	
+	
+		    </div>
+						 
+				 </section>
+			
+					 <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+					 <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+					<script type='text/javascript'>
+					</script>
+					
+</div>-->
+
+
+
+</div>
+
+
+
+
+<div class="footer">
+	 <!--<div class="container">
+		 <div class="ftr-grids">
+			 <div class="col-md-3 ftr-grid">
+				 <h4>About Us</h4>
+				 <ul>
+					 <li><a href="#">Who We Are</a></li>
+					 <li><a href="contact.html">Contact Us</a></li>
+					 <li><a href="#">Our Sites</a></li>
+					 <li><a href="#">In The News</a></li>
+					 <li><a href="#">Team</a></li>
+					 <li><a href="#">Careers</a></li>					 
+				 </ul>
+			 </div>
+			 <div class="col-md-3 ftr-grid">
+				 <h4>Customer service</h4>
+				 <ul>
+					 <li><a href="#">FAQ</a></li>
+					 <li><a href="#">Shipping</a></li>
+					 <li><a href="#">Cancellation</a></li>
+					 <li><a href="#">Returns</a></li>
+					 <li><a href="#">Bulk Orders</a></li>
+					 <li><a href="#">Buying Guides</a></li>					 
+				 </ul>
+			 </div>
+			 <div class="col-md-3 ftr-grid">
+				 <h4>Your account</h4>
+				 <ul>
+					 <li><a href="account.html">Your Account</a></li>
+					 <li><a href="#">Personal Information</a></li>
+					 <li><a href="#">Addresses</a></li>
+					 <li><a href="#">Discount</a></li>
+					 <li><a href="#">Track your order</a></li>					 					 
+				 </ul>
+			 </div>
+			 <div class="col-md-3 ftr-grid">
+				 <h4>Categories</h4>
+				 <ul>
+					 <li><a href="#">> Wedding</a></li>
+					 <li><a href="#">> Jewellerys</a></li>
+					 <li><a href="#">> Shoes</a></li>
+					 <li><a href="#">> Flowers</a></li>
+					 <li><a href="#">> Cakes</a></li>
+					 <li><a href="#">...More</a></li>					 
+				 </ul>
+			 </div>
+			 <div class="clearfix"></div>
+		 </div>		
+	 </div>-->
+
+	 </div>
+
+
+<!---->
+ <!--<div class="copywrite">
+	 <div class="container">
+		 <p>Copyright © 2015 Wedding Store. All Rights Reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+		 </div>
+</div>	-->
+
+
+
+<script>
+
+	
+	var accounts;
+	const getMyAddress = async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// set the provider you want from Web3.providers
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+		}
+		 accounts = await web3.eth.getAccounts();
+		document.getElementById("myaddr").innerHTML="Retailer Account: " + accounts[4];
+	}
+	
+	const reloadTable = async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// set the provider you want from Web3.providers
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+		}
+
+		const networkId = await web3.eth.net.getId();
+		const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+		const deployedEthbay = new web3.eth.Contract(
+			ethbayJson.abi,
+			ethbayJson.networks[networkId].address
+		);
+	   // const totalItemNumber = await deployedEthbay.methods.totalNumber().call();
+		let item ;
+	  //  for (var i = 1;i<= totalItemNumber;i++) {
+			let items = await deployedEthbay.methods.productToComponentMapping("FormalShirt",0).call();
+
+            let items5 = await deployedEthbay.methods.companyInventory(accounts[4],"FormalShirt").call();
+            console.log(items5);
+            document.getElementById("displayInventory").innerHTML=items5;
+
+
+            let items6 = await deployedEthbay.methods.companyInventory(accounts[4],"Jeans").call();
+            console.log(items6);
+            document.getElementById("displayInventory2").innerHTML=items6;
+			
+
+
+			let items2 = await deployedEthbay.methods.productToComponentMapping("FormalShirt",1).call();
+			document.getElementById("displayComponents1").innerHTML=items + ", " + items2;
+
+			let items3 = await deployedEthbay.methods.productToComponentMapping("Jeans",0).call();
+			let items4 = await deployedEthbay.methods.productToComponentMapping("Jeans",1).call();
+
+			document.getElementById("displayComponents2").innerHTML=items3 + ", " + items4;
+
+	
+
+		var table = $('#itemtable');
+		table.find("tbody tr").remove();
+	   // items.forEach(function (item) {
+		   let temp=-1;
+		   temp++;
+			table.append("<tr><td>" + temp + "</td><td>" + "FormalShirt" + "</td><td>" + 0 + "</td><td>" + items + ","+items2+"</td></tr>");
+			temp++;
+			table.append("<tr><td>" + temp + "</td><td>" + "Jeans" + "</td><td>" + 0 + "</td><td>" + items3 + ","+items4+"</td></tr>");
+            // });
+            
+            let total = await deployedEthbay.methods.retailerOrderNumber().call();
+		let orders = await deployedEthbay.methods.giveOrders(accounts[2],0).call();
+		console.log("Running Line 2");
+		console.log(total);
+
+
+		var table = $('#ordertable');
+		table.find("tbody tr").remove();
+		table.append('<tr><th><label class="btn btn-default control-label"> <b>Sr No</b></label></th><th><label class="btn btn-default control-label"> <b>Product</b></label></th><th><label class="btn btn-default control-label"> <b>Quantity</b></label></th><th><label class="btn btn-default control-label"> <b>Price</b></label></th><th><label class="btn btn-default control-label"> <b>Status</b></label></th></tr>');
+
+		var i =1;
+	   for(i=0;i<=total;i++) {
+		let orders = await deployedEthbay.methods.giveOrders(accounts[2],i).call();
+
+		 table.append("<tr><td>" + i + "</td><td>" + orders.name + "</td><td>" + orders.quantity + "</td><td>" + orders.orderPayment + "</td><td>" +orders.status + "</td></tr>");
+	   }	
+	};
+
+ $("#button1").click(async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// Note: please use WebsocketProvider if you want to subscribe events
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+        }
+     //   alert("hi");
+		//See? I am using the `id="itemid"` you saw above to access the content of user's input
+	   // const itemId = $("#itemid").val();
+		let name= $("#ItemName").val();
+		const address= $("#distributorAddress").val();
+		const numberOfComponents=$("#number").val();
+		const confirmedPriceEther = $("#confirmedPrice").val();
+		const confirmedPriceWei = web3.utils.toWei(confirmedPriceEther.toString(), 'Ether');
+		const accounts = await web3.eth.getAccounts();
+		const retailerAccount = accounts[4];
+//alert("bye");
+		try {
+			await web3.eth.personal.unlockAccount(retailerAccount, '', 1000);
+		} catch (error) {
+			console.log(error);
+		}
+		const networkId = await web3.eth.net.getId();
+		const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+		const deployedEthbay = new web3.eth.Contract(
+            ethbayJson.abi,
+            ethbayJson.networks[networkId].address
+		);
+		console.log(deployedEthbay)
+	  //  alert("dsuh");
+		//Estimate the gas consumption
+	   
+		const gasAmount = await deployedEthbay.methods.retailerRequirement(name,numberOfComponents,address).estimateGas({from: retailerAccount, value: confirmedPriceWei})
+	//   alert("hi");
+		try {
+			const receipt = await deployedEthbay.methods.retailerRequirement(name,numberOfComponents,address).send({from: retailerAccount, value: confirmedPriceWei, gas: gasAmount})
+			console.log("Receipt");
+			console.log(receipt);
+			const myItemId = receipt.events.orderCreatedfordistributor.returnValues.name.toString();
+			const myItemName = receipt.events.orderCreatedfordistributor.returnValues.quantity.toString();
+			const myItemId2 = receipt.events.orderCreatedfordistributor.returnValues.status.toString();
+		//	const myItemName2 = receipt.events.orderCreatedfordistributor.returnValues.orderId.toString();
+            const myItemName3 = receipt.events.orderCreatedfordistributor.returnValues.orderPayment.toString();
+
+			const message = "Item "  + " (ID: " + myItemId + ") is purchased successfully.";
+			console.log(message);
+			alert("Order placed successfully for the distributor");
+		} catch (error) {
+			console.log('Transaction Error: ');
+			console.log(error);
+		}
+	});
+
+
+	$("#button3").click(async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// Note: please use WebsocketProvider if you want to subscribe events
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+		}
+		//See? I am using the `id="itemid"` you saw above to access the content of user's input
+	   // const itemId = $("#itemid").val();
+		let name= $("#productName");
+		const confirmedPriceEther= $("#makingPrice").val();
+		//const numberOfComponents=$("#number").val();
+		//const confirmedPriceEther = $("#confirmedPrice").val();
+		const confirmedPriceWei = web3.utils.toWei(confirmedPriceEther.toString(), 'Ether');
+		const accounts = await web3.eth.getAccounts();
+		const buyerAccount = accounts[0];
+
+		try {
+			await web3.eth.personal.unlockAccount(buyerAccount, '', 1000);
+		} catch (error) {
+			console.log(error);
+		}
+		const networkId = await web3.eth.net.getId();
+		const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+		const deployedEthbay = new web3.eth.Contract(
+			ethbayJson.abi,
+		);
+		console.log(deployedEthbay)
+	   // alert("dsuh");
+		//Estimate the gas consumption
+	   
+		const gasAmount = await deployedEthbay.methods.createProduct(name.toString(),confirmedPriceEther).estimateGas({from: buyerAccount, value: confirmedPriceWei})
+	//   alert("hi");
+		try {
+			const receipt = await deployedEthbay.methods.createProduct(name.toString(),confirmedPriceEther).send({from: buyerAccount, value: confirmedPriceWei, gas: gasAmount})
+			console.log("Receipt");
+			console.log(receipt);
+			const myItemId = receipt.events.ordertoManufacturerCreated.returnValues.name.toString();
+			const myItemName = receipt.events.ordertoManufacturerCreated.returnValues.quantity.toString();
+			const myItemId2 = receipt.events.ordertoManufacturerCreated.returnValues.status.toString();
+			const myItemName2 = receipt.events.ordertoManufacturerCreated.returnValues.orderId.toString();
+
+			const message = "Item "  + " (ID: " + myItemId + ") is purchased successfully.";
+			console.log(message);
+		//	alert(message);
+		} catch (error) {
+			console.log('Transaction Error: ');
+			console.log(error);
+		}
+	});
+
+
+
+
+	$("#button4").click(async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// Note: please use WebsocketProvider if you want to subscribe events
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:7545"));
+		}
+		//See? I am using the `id="itemid"` you saw above to access the content of user's input
+	   // const itemId = $("#itemid").val();
+		let name= $("#productName");
+		const confirmedPriceEther= $("#makingPrice").val();
+		//const numberOfComponents=$("#number").val();
+		//const confirmedPriceEther = $("#confirmedPrice").val();
+		const confirmedPriceWei = web3.utils.toWei(confirmedPriceEther.toString(), 'Ether');
+		const accounts = await web3.eth.getAccounts();
+		const buyerAccount = accounts[0];
+
+		try {
+			await web3.eth.personal.unlockAccount(buyerAccount, '', 1000);
+		} catch (error) {
+			console.log(error);
+		}
+		const networkId = await web3.eth.net.getId();
+		const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+		const deployedEthbay = new web3.eth.Contract(
+			ethbayJson.abi,
+		);
+		console.log(deployedEthbay)
+	   // alert("dsuh");
+		//Estimate the gas consumption
+	   
+		const gasAmount = await deployedEthbay.methods.createProduct(name.toString(),confirmedPriceEther).estimateGas({from: buyerAccount, value: confirmedPriceWei})
+	  // alert("hi");
+		try {
+			const receipt = await deployedEthbay.methods.createProduct(name.toString(),confirmedPriceEther).send({from: buyerAccount, value: confirmedPriceWei, gas: gasAmount})
+			console.log("Receipt");
+			console.log(receipt);
+			const myItemId = receipt.events.ordertoManufacturerCreated.returnValues.name.toString();
+			const myItemName = receipt.events.ordertoManufacturerCreated.returnValues.quantity.toString();
+			const myItemId2 = receipt.events.ordertoManufacturerCreated.returnValues.status.toString();
+			const myItemName2 = receipt.events.ordertoManufacturerCreated.returnValues.orderId.toString();
+
+			const message = "Item "  + " (ID: " + myItemId + ") is purchased successfully.";
+			console.log(message);
+		//	alert(message);
+		} catch (error) {
+			console.log('Transaction Error: ');
+			console.log(error);
+		}
+	});
+
+
+
+  $("#button2").click(async () => {
+		if (typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		} else {
+			// set the provider you want from Web3.providers
+			web3 = new Web3(new Web3.providers.WebsocketProvider("ws://127.0.0.1:8545"));
+		}
+
+		const sellerAccount = $("#selleraccount").val();
+		const networkId = await web3.eth.net.getId();
+		const ethbayJson = await $.getJSON('../src/abis/SupplyChainCode.json')
+		const deployedEthbay = new web3.eth.Contract(
+			ethbayJson.abi,
+			ethbayJson.networks[networkId].address
+		);
+		/*
+		 * This is the syntax how do you want to subscribte the event ItemSold.
+		 * The `filter` is optional. You can use filter to select only the events with specific indexed values.
+		 * The `fromBlock` is also optional. It could be used to get some historical events. 
+		 *  If `fromBlock` is omitted, it has default value 'lastest', meaning ignore all historical events (before latest block) 
+		 *  If `fromBlock` is given, all historical events from the given block number to the latest block will be return when called first time.
+		 * In either case, a new event will always be caught during the current session.
+		 */ 
+		await deployedEthbay.events.ordertoManufacturerCreated(
+			{ filter: { itemOwner: [ sellerAccount ] },
+			  //fromBlock: 0
+			  fromBlock: 'latest' 
+			},
+			(error, result) => {
+				if (!error) {
+					console.log("Event Result");
+					console.log(result);
+					const eventItemId = result.returnValues.itemId;
+					const eventItemOwner = result.returnValues.manufacturerAddress;
+					const eventItemName = result.returnValues.name;
+					const eventItemPrice = result.returnValues.itemPrice.toString();
+					const eventMessage = "New item " + eventItemName + " (ID: " + eventItemId + ") is available at price " + web3.utils.fromWei(eventItemPrice) + " Ether";
+					console.log(eventMessage);
+				//	alert(eventMessage);
+				}
+			}
+		);
+		const message = "You have followed user " + sellerAccount + ". \nMessage will be sent when the user adds new items."
+		console.log(message);
+	//	alert(message);
+	});
+</script>
+
+
+
+</body>
+</html>
