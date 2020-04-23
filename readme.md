@@ -40,7 +40,7 @@
 <hr>
 <h3>How to run</h3>
 <ol>
-   <li>Download the files in the folder called Final_submission</li>
+   <li>Download the files in the folder called Final</li>
    <li>Open the folder in Vs code</li>
    <li>Open the .sol file</li>
    <li>Run Ganache and choose quickstart</li>
