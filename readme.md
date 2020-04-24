@@ -12,7 +12,7 @@
    <li> <a href="#run">How to Run</a></li>
    <!--<li> <a href="#demo">Demo Video </a></li>-->
 </ul>
-<h3>
+<h3 id = "intro">
    Introduction:
 </h3>
 <p id="intro">
@@ -33,12 +33,12 @@
    The main pain point under consideration is that the customer can see the components and their manufacturer in order to circumvent fraud. Our project also tackles the problem of non-payment or ill timed payments to seller through our smart contracts. <!--	Similarly, for distributers and retailers, they can directly see the parties involved in supply chain. -->. The project will also focus on ownership transfer and profit distribution among the vendor , retailer and distributer.
 </p>
 <hr>
-<h3>
+<h3 id = "tools">
    Tools used: 
    <img src= "Picture1.png">
 </h3>
 <hr>
-<h3>How to run</h3>
+<h3 id = "run">How to run</h3>
 <ol>
    <li>Download the files in the folder called Final</li>
    <li>Open the folder in Vs code</li>
