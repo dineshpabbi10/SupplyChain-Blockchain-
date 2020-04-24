@@ -22,7 +22,7 @@
 <p>
    The main stakeholders in the project are:
 <ul>
-   <li>Manufacturing Company</li>
+   <li>Manufacturing Company <img scr= "images/manufacturer.png"></li>
    <li>Admin Company</li>
    <li>Distributor</li>
    <li>Retailer</li>
