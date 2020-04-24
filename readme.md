@@ -21,13 +21,20 @@
 </p>
 <p>
    The main stakeholders in the project are:
-<ul>
-   <li>Manufacturing Company <img scr= "images/manufacturer.png"></li>
+<!--<ul>
+   <li>Manufacturing Company </li>
    <li>Admin Company</li>
    <li>Distributor</li>
    <li>Retailer</li>
    <li>Customer</li>
-</ul>
+</ul>-->
+   <br>
+   
+   <img src ="images/manufacturer.png">Manufacturing Company<br>
+   <img src ="images/company.png">Admin Company          <br>
+   <img src ="images/distributor.png">Distributor <br>
+   <img src ="images/retailer.png">Retailer <br>
+   <img src ="images/customer.png">Customer <br>
 </p>
 <p>
    The main pain point under consideration is that the customer can see the components and their manufacturer in order to circumvent fraud. Our project also tackles the problem of non-payment or ill timed payments to seller through our smart contracts. <!--	Similarly, for distributers and retailers, they can directly see the parties involved in supply chain. -->. The project will also focus on ownership transfer and profit distribution among the vendor , retailer and distributer.
